@@ -68,7 +68,10 @@ let fetchOrderProduct = async (req, res, next) => {
 
         let response = await OrderProduct.findAll({
             where: {
-                UserId: req.auth.id
+                [Op.and]: [
+                    { UserId: req.auth.id }, 
+                    { status: `pending` }
+                ], 
             },
             attributes: {
                 exclude: ['createdAt', `updatedAt`]
